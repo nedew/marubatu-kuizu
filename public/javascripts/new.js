@@ -16,7 +16,10 @@ let correctNum = 0;
 
 // const randomMondai = Math.floor(Math.random() * qa.length)
 
-let randomQA = qa[Math.floor(Math.random() * qa.length)];
+let randomNum = Math.floor(Math.random() * qa.length)
+let randomQA = qa[randomNum];
+qa.splice(randomNum, 1)
+
 console.log(randomQA);
 let randomQ = randomQA[0];
 let randomA = randomQA[1];
@@ -28,6 +31,10 @@ window.onload = () => {
   question.innerHTML = randomQ;
 };
 
+function retryRedirect() {
+  window.location = "/gamestart";
+}
+
 function judgement(btnNum) {
   // クリック時の正解or不正解判定
   if(randomA == btnNum){
@@ -36,8 +43,14 @@ function judgement(btnNum) {
 
   // 10問目であれば終了　終了した時の処理をここに書く
   if(qCount == 9){
+    // 要素を削除
+    document.getElementById('questionElement').remove();
+    
     // id kekka に答えを表示させる
-    alert('10問中 ' + correctNum + ' 問正解しました！');
+    const result = document.getElementById('result');
+    const retry = document.getElementById('retry');
+    result.innerHTML = '10問中 ' + correctNum + ' 問正解しました！';
+    retry.innerHTML = '<input type="button", id="retryButton", value="もう一度挑戦する", onclick="retryRedirect()"></input>'
   } else {
     qCount++;
     let answer = [];
@@ -51,13 +64,14 @@ function judgement(btnNum) {
 
     const randomMondai = Math.floor(Math.random() * qa.length)
 
-    randomQA = qa[Math.floor(Math.random() * qa.length)];
+    let randomNum = Math.floor(Math.random() * qa.length)
+    let randomQA = qa[randomNum];
+    qa.splice(randomNum, 1)
     randomQ = randomQA[0];
     randomA = randomQA[1];
     questionHead.innerHTML = (qCount + 1) + '問目';
     question.innerHTML = randomQ;
   }
 
-  // 次の問題へ
   
 }
